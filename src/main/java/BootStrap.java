@@ -1,12 +1,6 @@
-import akka.Client;
-import akka.ClientHandler;
 import akka.Server;
-import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
-import akka.actor.Props;
 import akka.io.Tcp;
-
-import java.net.InetSocketAddress;
 
 /**
  * Created by chenhao on 2016/11/4.

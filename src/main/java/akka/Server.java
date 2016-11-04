@@ -26,7 +26,7 @@ public class Server extends UntypedActor {
     @Override
     public void preStart() {
         final ActorRef tcp = Tcp.get(getContext().system()).manager();
-        tcp.tell(TcpMessage.bind(getSelf(), new InetSocketAddress("127.0.0.1", 9999), 100), getSelf());
+        tcp.tell(TcpMessage.bind(getSelf(), new InetSocketAddress("127.0.0.1", 8080), 100), getSelf());
     }
 
     @Override
@@ -35,12 +35,13 @@ public class Server extends UntypedActor {
 
         //this is about server side own info when establish a connection  one sile server side
         if (message instanceof Tcp.Bound) {
-            System.out.println("bind 9999 ok");
+            System.out.println("bind ok");
             manager.tell(message, getSelf());
         }
         //this means commandfailed
         // this is about server  one side server side
         else if (message instanceof Tcp.CommandFailed) {
+            System.out.println("bind error");
             getContext().stop(getSelf());
         }
         //this means client sended message   just client proxy  but user don't care

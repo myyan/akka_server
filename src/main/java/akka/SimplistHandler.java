@@ -15,18 +15,27 @@ public class SimplistHandler extends UntypedActor {
         //receive messgae
         if (message instanceof Tcp.Received) {
             final ByteString data = ((Tcp.Received) message).data();
-            System.out.println("get data");
+            System.out.println("客户端发来信息:"+getSender());
             System.out.println(data);
             getSender().tell(TcpMessage.write(data), getSelf());
-            // get close message
-        } else if (message instanceof Tcp.ConnectionClosed) {
+            getSender().tell(TcpMessage.write(testData()), getSelf());
+
+        }
+        // get close message
+        else if (message instanceof Tcp.ConnectionClosed) {
             System.out.println("handler closed");
             getContext().stop(getSelf());
+        } else {
+            unhandled(message);
         }
     }
-    public ByteString getString(){
-        ByteStringBuilder stringBuilder = new ByteStringBuilder();
-        stringBuilder.putBytes("123".getBytes());
-        return stringBuilder.result();
+
+    private ByteString testData() {
+        ByteStringBuilder sb = new ByteStringBuilder();
+        sb.putByte((byte) 0x01);
+        sb.putByte((byte) 0x02);
+        sb.putByte((byte) 0x03);
+        return sb.result();
     }
+
 }
