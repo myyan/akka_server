@@ -1,4 +1,4 @@
-package akka;
+package com.maxtropy.iec104.akka;
 
 import akka.actor.ActorRef;
 import akka.actor.Props;
@@ -26,7 +26,7 @@ public class Server extends UntypedActor {
     @Override
     public void preStart() {
         final ActorRef tcp = Tcp.get(getContext().system()).manager();
-        tcp.tell(TcpMessage.bind(getSelf(), new InetSocketAddress("127.0.0.1", 8080), 100), getSelf());
+        tcp.tell(TcpMessage.bind(getSelf(), new InetSocketAddress("127.0.0.1", 2404), 100), getSelf());
     }
 
     @Override
@@ -38,7 +38,7 @@ public class Server extends UntypedActor {
             System.out.println("bind ok");
             manager.tell(message, getSelf());
         }
-        //this means commandfailed
+        //this means command failed
         // this is about server  one side server side
         else if (message instanceof Tcp.CommandFailed) {
             System.out.println("bind error");
@@ -49,7 +49,7 @@ public class Server extends UntypedActor {
             System.out.println("server connected");
             final Tcp.Connected con = (Tcp.Connected) message;
             manager.tell(con, getSelf());
-            final ActorRef handler = getContext().actorOf(Props.create(SimplistHandler.class));
+            final ActorRef handler = getContext().actorOf(Props.create(Handler.class));
             getSender().tell(TcpMessage.register(handler), getSelf());
         }
     }

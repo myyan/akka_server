@@ -1,4 +1,4 @@
-package akka;
+package com.maxtropy.iec104.akka;
 
 import akka.actor.UntypedActor;
 import akka.io.Tcp;
@@ -9,7 +9,7 @@ import akka.util.ByteStringBuilder;
 /**
  * Created by chenhao on 2016/11/4.
  */
-public class SimplistHandler extends UntypedActor {
+public class Handler extends UntypedActor {
     @Override
     public void onReceive(Object message) throws Exception {
         //receive messgae
