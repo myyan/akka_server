@@ -1,4 +1,4 @@
-import com.maxtropy.iec104.akka.Server;
+import com.maxtropy.iec104.actors.Server;
 import akka.actor.ActorSystem;
 import akka.io.Tcp;
 

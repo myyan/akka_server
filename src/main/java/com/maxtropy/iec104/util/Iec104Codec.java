@@ -26,14 +26,14 @@ public class Iec104Codec {
 
     public Iec104Frame decode(ByteString rawData) throws Iec104DecodeControlCodeException {
         val buf = rawData.asByteBuffer();
-        buf.get();
-        int dataLength = buf.get();
-        Byte sendSeq1 = buf.get();
-        Byte sendSeq2 = buf.get();
-        Byte respSeq1 = buf.get();
-        Byte respSeq2 = buf.get();
-        byte[] data = new byte[dataLength];
-        buf.get(data, 0, dataLength);
+        buf.get();//启动字符
+        int dataLength = buf.get();//APDU长度
+        Byte sendSeq1 = buf.get();//控制域第一个八位组
+        Byte sendSeq2 = buf.get();//控制域第二个八位组
+        Byte respSeq1 = buf.get();//控制域第三个八位组
+        Byte respSeq2 = buf.get();//控制域第四个八位组
+        byte[] data = new byte[dataLength - 4];//ASDU
+        buf.get(data, 0, dataLength-4);
         byte ctrlCode = (byte) (sendSeq1 & 0x03);
         Iec104Frame frame;
         switch (ctrlCode) {
