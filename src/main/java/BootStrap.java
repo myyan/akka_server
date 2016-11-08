@@ -7,11 +7,7 @@ import akka.io.Tcp;
  */
 public class BootStrap {
     public static void main(String[] args) {
-        ActorSystem actorSystem = ActorSystem.create("mySystem");
-        actorSystem.actorOf(Server.props(Tcp.get(actorSystem).manager()),"tcpManager");
-//        InetSocketAddress address = new InetSocketAddress("localhost",2404);
-//        ActorRef clientHandler = actorSystem.actorOf(Props.create(ClientHandler.class),"clientHandler");
-//        actorSystem.actorOf(Client.props(address,clientHandler),"client");
-
+        ActorSystem actorSystem = ActorSystem.create("iec104_system");
+        actorSystem.actorOf(Server.props(), "tcpManager");
     }
 }

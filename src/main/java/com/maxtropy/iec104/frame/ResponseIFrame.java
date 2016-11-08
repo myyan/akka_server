@@ -25,7 +25,7 @@ public class ResponseIFrame extends Iec104Frame {
         return seqNum;
     }
 
-    public int getRespSeqNumber() {
+    public int getReceiverSeqNumber() {
         int seqNum = 0;
         for (int i = 1; i < 8; i++) {
             seqNum += (respSeq1 >> i & 0x01) * (1 << (i - 1));
